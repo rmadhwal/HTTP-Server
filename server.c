@@ -1,5 +1,4 @@
 
-#include "string_util.h"
 
 #include <assert.h>
 #include <netinet/in.h>
@@ -32,6 +31,39 @@ typedef enum {
 }   filetype_t;
 
 
+int starts_with(char *s, const char *with) {
+  return strncmp(s, with, strlen(with)) == 0;
+}
+
+int contains(const char *s1, const char *s2) {
+  return strstr(s1, s2) != NULL;
+}
+
+char *concat(const char *s1, const char *s2) {
+  char *r = malloc(strlen(s1) + strlen(s2) + 1);
+  strcpy(r, s1);
+  strcat(r, s2);
+  return r;
+}
+
+char *strappend(const char *s1, const char *s2) {
+  char *r = malloc(strlen(s1) + strlen(s2) + 1);
+  strcpy(r, s1);
+  strcat(r, s2);
+  assert(strlen(r) == strlen(s1) + strlen(s2));
+  return r;
+}
+
+char* substr(const char* input, int offset, int len, char* dest) {
+  int input_len = strlen (input);
+
+  if (offset + len > input_len) {
+    return NULL;
+  }
+
+  strncpy(dest, input + offset, len);
+  return dest;
+}
 
 //Error printing helper function
 void error(char *message) {
